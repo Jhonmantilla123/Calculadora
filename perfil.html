@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi perfil - Calculadora de Materiales</title>
+    <link rel="shortcut icon" href="google.png.svg">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <img class="logo" src="logo.png" alt="Materiales">
+    <main class="calc-container">
+        <h1>Mi perfil</h1>
+        <form id="form-perfil">
+            <div class="input-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" required>
+            </div>
+            <div class="input-group">
+                <label for="correo">Correo</label>
+                <input type="text" id="correo" disabled>
+            </div>
+            <div class="input-group">
+                <label for="rol">Perfil</label>
+                <input type="text" id="rol" disabled>
+            </div>
+            <div class="input-group">
+                <label for="password">Nueva contraseña</label>
+                <input type="password" id="password" placeholder="Déjala vacía para no cambiarla">
+            </div>
+            <button type="submit" class="btn-calcular">Guardar cambios</button>
+        </form>
+        <p id="mensaje"></p>
+
+        <button class="btn-volver" id="btn-eliminar">Eliminar mi cuenta</button>
+        <button class="btn-nuevo" onclick="location.href='menu.html'">← Volver al menú</button>
+    </main>
+
+    <script src="api.js"></script>
+    <script>
+        API.requerirSesion();
+        const mensaje = document.getElementById('mensaje');
+
+        // READ: cargar los datos actuales
+        (async () => {
+            try {
+                const p = await API.perfil();
+                document.getElementById('nombre').value = p.nombre;
+                document.getElementById('correo').value = p.correo;
+                document.getElementById('rol').value = p.rol;
+            } catch (e) { mensaje.textContent = e.message; }
+        })();
+
+        // UPDATE: guardar cambios
+        document.getElementById('form-perfil').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const datos = { nombre: document.getElementById('nombre').value };
+            const pass = document.getElementById('password').value;
+            if (pass) datos.password = pass;
+            try {
+                const u = await API.actualizarPerfil(datos);
+                localStorage.setItem('usuario', JSON.stringify(u));
+                document.getElementById('password').value = '';
+                mensaje.textContent = 'Perfil actualizado';
+            } catch (err) { mensaje.textContent = err.message; }
+        });
+
+        // DELETE: eliminar cuenta
+        document.getElementById('btn-eliminar').addEventListener('click', async () => {
+            if (!confirm('Se eliminará tu cuenta y todo tu historial. ¿Continuar?')) return;
+            try {
+                await API.eliminarCuenta();
+                API.logout();
+                location.href = 'index.html';
+            } catch (err) { mensaje.textContent = err.message; }
+        });
+    </script>
+</body>
+
+</html>

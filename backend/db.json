@@ -1,0 +1,99 @@
+{
+  "usuarios": [
+    {
+      "id": 1,
+      "nombre": "Jhon anderson mantilla",
+      "correo": "jhonanderson115@icloud.com",
+      "rol": "usuario",
+      "hash": "$2a$10$/HrCLcSZg.3ifxF715yH8O5YnQlTpM5Et5RVXUQqws3A23jolNB/2"
+    },
+    {
+      "id": 5,
+      "nombre": "Jhon anderson",
+      "correo": "jhon-anderson@hotmail.com",
+      "rol": "usuario",
+      "hash": "$2a$10$GNK76sq71XDKbz.0i5EUjeUrvZ1/oQw.69Gah8m11NbledWA7693e"
+    },
+    {
+      "id": 7,
+      "nombre": "Jhon anderson",
+      "correo": "pruebapepe@gmail.com",
+      "rol": "usuario",
+      "hash": "$2a$10$InZdZjP/omjMkrSuVMlz4uGQYO/dkTFQAbnP0iVd8wfmAuD9UnYai"
+    }
+  ],
+  "calculos": [
+    {
+      "id": 2,
+      "usuarioId": 1,
+      "tipo": "columna",
+      "titulo": "Columna de 34 m",
+      "datos": {
+        "Cemento": "255.00 Kg",
+        "Arena": "0.544 m³",
+        "Piedra": "0.544 m²",
+        "Hierro del 10": "204 m",
+        "Hierro del 4": "102 m"
+      },
+      "fecha": "2026-10-24T15:55:50.892Z"
+    },
+    {
+      "id": 3,
+      "usuarioId": 1,
+      "tipo": "columna",
+      "titulo": "Columna de 4 m",
+      "datos": {
+        "Cemento": "30.00 Kg",
+        "Arena": "0.064 m³",
+        "Piedra": "0.064 m²",
+        "Hierro del 10": "24 m",
+        "Hierro del 4": "12 m"
+      },
+      "fecha": "2026-10-24T15:55:53.118Z"
+    },
+    {
+      "id": 4,
+      "usuarioId": 1,
+      "tipo": "columna",
+      "titulo": "Columna de 4 m",
+      "datos": {
+        "Cemento": "30.00 Kg",
+        "Arena": "0.064 m³",
+        "Piedra": "0.064 m²",
+        "Hierro del 10": "24 m",
+        "Hierro del 4": "12 m"
+      },
+      "fecha": "2026-10-24T15:55:56.056Z"
+    },
+    {
+      "id": 6,
+      "usuarioId": 5,
+      "tipo": "columna",
+      "titulo": "Columna de 566 m",
+      "datos": {
+        "Cemento": "4245.00 Kg",
+        "Arena": "9.056 m³",
+        "Piedra": "9.056 m²",
+        "Hierro del 10": "3396 m",
+        "Hierro del 4": "1698 m"
+      },
+      "fecha": "2026-10-24T15:58:51.369Z"
+    },
+    {
+      "id": 8,
+      "usuarioId": 7,
+      "tipo": "techo",
+      "titulo": "MI TECHO",
+      "datos": {
+        "Superficie": "144.00 m²",
+        "Cemento": "4752.0 Kg",
+        "Arena": "10.37 m³",
+        "Piedra": "10.37 m³",
+        "Hierro del 8": "1008 m",
+        "Hierro del 6": "576 m"
+      },
+      "fecha": "2026-10-26T14:21:59.200Z"
+    }
+  ],
+  "sig": 9
+}

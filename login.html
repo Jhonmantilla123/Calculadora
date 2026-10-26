@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar sesión - Calculadora de Materiales</title>
+    <meta name="description" content="Calculadora de todo tipo de materiales">
+    <meta name="author" content="JHON ANDERSON MANTILLA">
+    <link rel="shortcut icon" href="google.png.svg">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <img class="logo" src="logo.png" alt="Materiales">
+    <header>
+        <h1>Iniciar sesión</h1>
+
+        <form id="form-login">
+            <input type="text" name="correo" placeholder="Usuario o correo" required>
+            <input type="password" name="password" placeholder="Contraseña" required>
+            <button type="submit" class="btn-primary">Iniciar sesión</button>
+        </form>
+        <p id="mensaje"></p>
+        <h2 class="vertical-text"><a href="recuperar.html">¿Olvidaste tu contraseña?</a></h2>
+
+        <p class="divider-text">O inicia sesión con</p>
+        <div class="social-icons">
+            <a href="https://accounts.google.com/signin" target="_blank"><img src="google.png.svg" alt="Google"></a>
+            <a href="https://www.facebook.com/login" target="_blank"><img src="facebook.png.svg" alt="Facebook"></a>
+            <a href="https://www.instagram.com/accounts/login" target="_blank"><img src="instagram-png.svg"
+                    alt="Instagram"></a>
+            <a href="https://twitter.com/login" target="_blank"><img src="x-twitter-brands-solid-full.svg"
+                    alt="Twitter"></a>
+        </div>
+
+        <p>¿No tienes cuenta? <a href="registro.html">Regístrate aquí</a></p>
+    </header>
+
+    <script src="api.js"></script>
+    <script>
+        document.getElementById('form-login').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const mensaje = document.getElementById('mensaje');
+            mensaje.textContent = 'Ingresando...';
+            try {
+                await API.login(e.target.correo.value, e.target.password.value);
+                location.href = 'menu.html';
+            } catch (err) {
+                mensaje.textContent = err.message;
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú - Calculadora de Materiales</title>
+    <meta name="description" content="Calcular todo tipo de material">
+    <meta name="author" content="JHON ANDERSON MANTILLA">
+    <link rel="shortcut icon" href="google.png.svg">
+    <link rel="stylesheet" href="style.css">
+    <script src="api.js"></script>
+    <script>API.requerirSesion();</script>
+</head>
+
+<body>
+    <div class="menu-container">
+        <img src="logo.png" class="menu-icon" alt="icono">
+        <h1 class="menu-title">Calculadora de Materiales</h1>
+        <p id="saludo" style="color:#ffd966; margin-bottom:16px;"></p>
+
+        <div class="menu-grid">
+            <button class="menu-item" onclick="window.location.href='muro.html'">
+                <img src="imagenladrillo.png" alt="">
+                <span>1 - Calcular muro de ladrillo</span>
+            </button>
+            <button class="menu-item" onclick="window.location.href='calcularviga.html'">
+                <img src="imagenvigaormigon.png" alt="">
+                <span>2 - Calcular viga de hormigón</span>
+            </button>
+            <button class="menu-item" onclick="window.location.href='columna.html'">
+                <img src="imagencolumnadehormigon.png" alt="">
+                <span>3 - Calcular columnas de hormigón</span>
+            </button>
+            <button class="menu-item" onclick="window.location.href='contrapiso.html'">
+                <img src="imacontrapiso.png" alt="">
+                <span>4 - Calcular contrapisos</span>
+            </button>
+            <button class="menu-item" onclick="window.location.href='techo.html'">
+                <img src="imgtecho.png" alt="">
+                <span>5 - Calcular techo</span>
+            </button>
+            <button class="menu-item" onclick="window.location.href='piso.html'">
+                <img src="imgpiso.png" alt="">
+                <span>6 - Calcular pisos</span>
+            </button>
+            <button class="menu-item" onclick="window.location.href='pintura.html'">
+                <img src="pintura.png" alt="">
+                <span>7 - Calcular pintura</span>
+            </button>
+            <button class="menu-item salir" onclick="API.logout(); window.location.href='login.html'">
+                <span>🚪</span>
+                <span>8 - Salir</span>
+            </button>
+        </div>
+
+        <!-- Extras del CRUD, aparte del menú de 8 opciones -->
+        <div class="menu-grid" style="margin-top:20px;">
+            <button class="menu-item" onclick="window.location.href='historial.html'">
+                <span>📋</span><span>Mi historial</span>
+            </button>
+            <button class="menu-item" onclick="window.location.href='perfil.html'">
+                <span>👤</span><span>Mi perfil</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const u = API.usuario();
+        if (u) document.getElementById('saludo').textContent = `Hola, ${u.nombre} (${u.rol})`;
+    </script>
+</body>
+
+</html>

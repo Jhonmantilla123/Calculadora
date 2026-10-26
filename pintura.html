@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcular Pintura - Calculadora de Materiales</title>
+    <link rel="shortcut icon" href="google.png.svg">
+    <link rel="stylesheet" href="style.css">
+    <script src="api.js"></script>
+    <script>API.requerirSesion();</script>
+    <script src="calculadora.js" defer></script>
+</head>
+
+<body>
+    <img class="logo" src="logo.png" alt="Materiales">
+
+    <main class="calc-container" id="vista-formulario">
+        <h1>Calcular pintura</h1>
+        <form id="form-pintura">
+            <div class="input-group">
+                <label for="superficie">Superficie del muro (m²)</label>
+                <input type="number" id="superficie" placeholder="Ej: 12.5" step="0.01" required>
+            </div>
+            <button type="submit" class="btn-calcular">Calcular</button>
+        </form>
+    </main>
+
+    <div class="calc-container" id="vista-resultado" style="display:none;">
+        <h1>Resultado</h1>
+        <h2 id="resultado-titulo"></h2>
+        <div class="resultado-grid">
+            <div class="resultado-card"><span class="resultado-label">Superficie</span><span class="resultado-valor"
+                    id="valor-superficie">--</span></div>
+            <div class="resultado-card"><span class="resultado-label">Pintura (rinde 6 m² por litro)</span><span
+                    class="resultado-valor" id="valor-litros">--</span></div>
+        </div>
+        <button class="btn-volver" onclick="window.location.href='menu.html'">← Volver al menú</button>
+        <button class="btn-nuevo" onclick="window.location.href='pintura.html'">Calcular de nuevo</button>
+    </div>
+</body>
+
+</html>

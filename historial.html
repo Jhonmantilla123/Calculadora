@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial - Calculadora de Materiales</title>
+    <link rel="shortcut icon" href="google.png.svg">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .item {
+            background: #2a3142;
+            border-radius: 10px;
+            padding: 14px;
+            margin-bottom: 12px;
+        }
+
+        .item h3 {
+            margin-bottom: 6px;
+            font-size: 16px;
+        }
+
+        .item small {
+            color: rgba(255, 255, 255, .6);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .item ul {
+            list-style: none;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .acciones {
+            display: flex;
+            gap: 8px;
+        }
+
+        .acciones button {
+            width: auto;
+            padding: 8px 14px;
+            margin: 0;
+            border-radius: 8px;
+        }
+
+        .vacio {
+            text-align: center;
+            color: #ffd966;
+            margin: 10px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        td,
+        th {
+            padding: 6px;
+            border-bottom: 1px solid rgba(255, 255, 255, .15);
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <img class="logo" src="logo.png" alt="Materiales">
+    <main class="calc-container">
+        <h1>Mi historial</h1>
+        <p id="mensaje"></p>
+        <div id="lista"></div>
+
+        <section id="admin" style="display:none; margin-top:30px;">
+            <h1>Usuarios (administrador)</h1>
+            <table id="tabla-usuarios"></table>
+        </section>
+
+        <button class="btn-volver" onclick="location.href='menu.html'">← Volver al menú</button>
+    </main>
+
+    <script src="api.js"></script>
+    <script>
+        API.requerirSesion();
+        const mensaje = document.getElementById('mensaje');
+        const lista = document.getElementById('lista');
+
+        async function cargar() {
+            try {
+                const calculos = await API.listarCalculos();            // READ
+                lista.innerHTML = calculos.length ? '' : '<p class="vacio">Aún no tienes cálculos guardados.</p>';
+                calculos.forEach(c => {
+                    const div = document.createElement('div');
+                    div.className = 'item';
+                    const items = Object.entries(c.datos).map(([k, v]) => `<li>${k}: <b>${v}</b></li>`).join('');
+                    div.innerHTML = `<h3></h3><small>${new Date(c.fecha).toLocaleString()}</small><ul>${items}</ul>
+                        <div class="acciones">
+                          <button class="btn-primary" data-a="ren">Renombrar</button>
+                          <button class="btn-secondary" data-a="del">Eliminar</button>
+                        </div>`;
+                    div.querySelector('h3').textContent = c.titulo;
+                    div.querySelector('[data-a=ren]').onclick = async () => {   // UPDATE
+                        const t = prompt('Nuevo título:', c.titulo);
+                        if (t && t.trim()) { await API.renombrarCalculo(c.id, t.trim()); cargar(); }
+                    };
+                    div.querySelector('[data-a=del]').onclick = async () => {   // DELETE
+                        if (confirm('¿Eliminar este cálculo?')) { await API.eliminarCalculo(c.id); cargar(); }
+                    };
+                    lista.appendChild(div);
+                });
+            } catch (e) { mensaje.textContent = e.message; }
+        }
+
+        async function cargarAdmin() {
+            const u = API.usuario();
+            if (!u || u.rol !== 'admin') return;
+            document.getElementById('admin').style.display = 'block';
+            const t = document.getElementById('tabla-usuarios');
+            const usuarios = await API.listarUsuarios();
+            t.innerHTML = '<tr><th>Nombre</th><th>Correo</th><th>Rol</th><th></th></tr>';
+            usuarios.forEach(x => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td></td><td></td><td>${x.rol}</td><td></td>`;
+                tr.children[0].textContent = x.nombre;
+                tr.children[1].textContent = x.correo;
+                if (x.id !== u.id) {
+                    const b = document.createElement('button');
+                    b.textContent = 'Eliminar';
+                    b.className = 'btn-secondary';
+                    b.style.cssText = 'width:auto;padding:4px 10px;margin:0';
+                    b.onclick = async () => {
+                        if (confirm('¿Eliminar usuario?')) { await API.eliminarUsuario(x.id); cargarAdmin(); }
+                    };
+                    tr.children[3].appendChild(b);
+                }
+                t.appendChild(tr);
+            });
+        }
+        cargar();
+        cargarAdmin();
+    </script>
+</body>
+
+</html>
